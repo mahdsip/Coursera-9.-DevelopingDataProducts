@@ -1,0 +1,74 @@
+Developing Data Products: Shinny
+========================================================
+author: Miguel Angel Huerta 
+date: 18 - 08 - 2018
+autosize: true
+
+Introduction
+========================================================
+
+this presentation is part of the Coursera course Developing Data Products project where it should be showed the use of the following
+
+- Shinny application running on ui.R and server.R files
+- Pitch Presentation of the application 
+
+Shinny Application part 1
+========================================================
+The project want to show serial data from inpatients in a hospital
+```{r echo=FALSE,message=FALSE}
+      library(shiny)
+      library(lubridate) # for working with dates
+      library(ggplot2)  # for creating graphs
+      library(scales)   # to access breaks/formatting functions
+      library(zoo)
+      library(data.table)
+      data <- data.frame("date"=  seq(as.Date("2000/1/1"), by = "month", length.out = 12),"value" = sample(1:100, 12))
+      
+      data$quarter <- as.yearqtr(data$date, format = "%Y-%m-%d")
+      
+      
+      # Define Start and end times for the subset as R objects that are the time class
+      startTime <- min(data$date)
+      endTime <- max(data$date)
+      
+      # create a start and end time R object
+      start.end <- c(startTime,endTime)
+      #start.end
+      
+              qplot(x=date, y=value,
+              data=data, na.rm=TRUE,
+              main="patients per month",
+              xlab="Date", ylab="patient")+
+          geom_bar(stat="identity", na.rm = TRUE) +
+          scale_x_date( limits=start.end,
+                        #breaks=date_breaks("1 month"),
+                        labels=date_format("%b %y"))
+      
+```
+
+Shinny Application part 2
+========================================================
+
+Sometimes is usefull to show the information in quarters
+
+```{r, echo=FALSE}
+        DT <- data.table(data)
+        DT <-DT[, .(PAC = sum(value)) ,by = list(quarter)]
+      
+        qplot(x=quarter, y=PAC,
+            data=DT, na.rm=TRUE,
+            main="Inpatients",
+            xlab="Date",
+            ylab="patients")+
+        geom_bar(stat="identity", na.rm = TRUE)+
+        scale_x_yearqtr(#limits = c(min(DT$quarter), max(DT$quarter)),
+                      format = "%YQ%q")
+```
+
+Conclusion
+========================================================
+
+I have make use of shiny interactive functionalities to have a select input where to define if i want to show the information quarterly or monthly. Besides this, there is more examples of dinamically show information depending on parameter.
+
+
+
