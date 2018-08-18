@@ -5,7 +5,7 @@ This presentation is being created as part of the peer assessment for the course
 
 I have make use of several components that change the interface dynamicaly. There is also a barplot showing time series data that depending on a select button scale the timeline between months and quarters
 
-Click [here](https://mahdsip.shinyapps.io/Shinny/) to see the application
-Click [here](http://rpubs.com/mahdsip/413135) to see R-Presentation deck.
+- Click [here](https://mahdsip.shinyapps.io/Shinny/) to see the application
+- Click [here](http://rpubs.com/mahdsip/413135) to see R-Presentation deck.
 
 
